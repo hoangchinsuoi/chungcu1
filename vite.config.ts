@@ -13,6 +13,13 @@ export default defineConfig(() => {
     },
     server: {
       port: 5173,
+      proxy: {
+        '/api/platform': {
+          target: 'https://trandoi-001-site1.gtempurl.com',
+          changeOrigin: true,
+          secure: false,
+        },
+      },
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modify—file watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',

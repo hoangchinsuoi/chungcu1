@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EZCondoAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c02207e83cd6fe32fcdf4b024eb1809509dae8b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+76999d688c532bd1c92098ddeadb5a572b7f3b99")]
 [assembly: System.Reflection.AssemblyProductAttribute("EZCondoAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EZCondoAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

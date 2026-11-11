@@ -1,3 +1,5 @@
+export * from './platformApi';
+
 const API_BASE = 'http://localhost:5263/api';
 
 async function request<T>(url: string, options?: RequestInit): Promise<T> {

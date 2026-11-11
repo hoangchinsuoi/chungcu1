@@ -16,6 +16,50 @@ const isProd = process.env.NODE_ENV === 'production';
 
 app.use(express.json());
 
+// ============================================================
+// PROXY: EzCondo Platform Backend (https://trandoi-001-site1.gtempurl.com)
+// ============================================================
+const PLATFORM_BACKEND_URL = process.env.PLATFORM_BACKEND_URL || 'https://trandoi-001-site1.gtempurl.com';
+
+app.all('/api/platform/*', async (req, res) => {
+  try {
+    const targetUrl = `${PLATFORM_BACKEND_URL}${req.originalUrl}`;
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    };
+    if (req.headers.authorization) {
+      headers['Authorization'] = req.headers.authorization;
+    }
+
+    const options: RequestInit = {
+      method: req.method,
+      headers,
+    };
+    if (req.method !== 'GET' && req.method !== 'HEAD' && req.body && Object.keys(req.body).length > 0) {
+      options.body = JSON.stringify(req.body);
+    }
+
+    const remoteRes = await fetch(targetUrl, options);
+    const contentType = remoteRes.headers.get('content-type') || '';
+    res.status(remoteRes.status);
+
+    if (contentType.includes('application/json')) {
+      const data = await remoteRes.json();
+      return res.json(data);
+    } else {
+      const text = await remoteRes.text();
+      return res.send(text);
+    }
+  } catch (err: any) {
+    console.error('Platform Proxy Error:', err);
+    res.status(502).json({
+      error: 'Không thể kết nối đến Backend Platform (trandoi-001-site1.gtempurl.com)',
+      detail: err.message,
+    });
+  }
+});
+
 // Initialize Gemini SDK with telemetry header
 const apiKey = process.env.GEMINI_API_KEY;
 const ai = apiKey
